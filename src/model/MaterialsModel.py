@@ -1,12 +1,12 @@
 from PyQt5.QtSql import QSqlQueryModel
 from PyQt5.QtCore import QObject, Qt
+from model.Material import Material
 
 
 class MaterialsModel(QSqlQueryModel):
     def __init__(self, parent: QObject | None = ...) -> None:
         super().__init__(parent)
         self.refresh_data()
-        self.setHeaderData(0, Qt.Horizontal, "Превью")
         self.setHeaderData(1, Qt.Horizontal, "Тип")
         self.setHeaderData(2, Qt.Horizontal, "Наименование")
         self.setHeaderData(3, Qt.Horizontal, "Остаток")
@@ -33,3 +33,13 @@ class MaterialsModel(QSqlQueryModel):
                     on mt.id = m.type_id
         '''
         self.setQuery(sql)
+
+    def get_row_fields(self, rowId):
+        material = Material()
+        material.type = self.data(self.index(rowId, 1))
+        material.name = self.data(self.index(rowId, 2))
+        material.inventory = self.data(self.index(rowId, 3))
+        material.min_amount = self.data(self.index(rowId, 4))
+        material.suppliers = self.data(self.index(rowId, 5))
+        material.image = self.data(self.index(rowId, 6))
+        return material

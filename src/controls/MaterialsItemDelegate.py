@@ -9,9 +9,10 @@ from PyQt5.QtCore import (
     QObject,
     QSize,
     pyqtSlot,
-    Qt
+    Qt,
+    QRect,
 )
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QFontMetrics
 from PyQt5.QtWidgets import (
     QTableView,
     QWidget,
@@ -30,7 +31,7 @@ from PyQt5.QtWidgets import (
     QStyle
 )
 
-from controls.MaterialsWidget import MaterialsWidget
+from model.Material import Material
 
 
 class MaterialsItemDelegate(QStyledItemDelegate):
@@ -38,15 +39,16 @@ class MaterialsItemDelegate(QStyledItemDelegate):
     def __init__(self, parent: QObject | None = ...) -> None:
         super().__init__(parent)
 
+    def sizeHint(self, option, index):
+        fm = QFontMetrics(option.font)
+        return QSize(150, fm.height() * 5 + fm.leading())
+
     def paint(
             self,
             painter: QPainter | None,
             option: QStyleOptionViewItem,
             index: QModelIndex) -> None:
-
-        record = index.data()
-        print(record)
-
-        QApplication \
-            .style() \
-            .drawControl(QStyle.CE_ItemViewItem, new_option, painter)
+        material: Material = index.model().get_row_fields(index.row())
+        print(material)
+        descrRect = QRect(option.rect)
+        painter.drawText(descrRect, Qt.AlignLeading, material.name)

@@ -31,6 +31,8 @@ class WSUniversal(object):
         product_type: ProductType,
         material_type: MaterialType,
     ):
+        if count <= 0 or width <= 0 or length <= 0:
+            return -1
         square = width * length
         material_amount = count * square \
             * WSUniversal.product_type_coef[product_type]

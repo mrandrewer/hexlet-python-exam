@@ -9,3 +9,13 @@ def test_success():
         WSUniversal.ProductType.Type3,
         WSUniversal.MaterialType.Type1)
     assert amount == 114147
+
+
+def test_incorrect_params():
+    amount = WSUniversal.calculate_materials(
+        -1,
+        20,
+        45,
+        WSUniversal.ProductType.Type3,
+        WSUniversal.MaterialType.Type1)
+    assert amount == -1

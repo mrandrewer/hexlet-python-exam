@@ -35,6 +35,7 @@ class MainWindow(QMainWindow):
         material.min_amount = 20
         material.inventory = 100
         material.suppliers = "Рога и копыта"
+        material.image = "picture.png"
 
         materialWidget = MaterialsWidget(material, self)
         main_layout.addWidget(materialWidget)

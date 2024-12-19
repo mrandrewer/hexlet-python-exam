@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtWidgets import (
     QWidget,
     QLabel,
@@ -6,6 +7,9 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QListView
+)
+from PyQt5.QtGui import (
+    QPixmap
 )
 from PyQt5.QtSql import QSqlRecord
 
@@ -18,10 +22,22 @@ class MaterialsWidget(QWidget):
         title = f"{material.type} | {material.name}"
         inventory = f"Остаток: {material.min_amount} шт"
         min_amount = f"Минимальное количество: {material.min_amount} шт"
+        image_path = os.path.dirname(
+            os.path.dirname(
+                os.path.abspath(__file__)
+            )
+        ) + "/resources/" + material.image
 
         hbox = QHBoxLayout()
+        image_view = QLabel()
+        image_view.setObjectName("image")
+        print(image_path)
+        image_view.setPixmap(
+            QPixmap(image_path)
+        )
+        hbox.addWidget(image_view)
+
         right_box = QVBoxLayout()
-        
         title_box = QHBoxLayout()
         title_label = QLabel(title)
         title_label.setObjectName("title")

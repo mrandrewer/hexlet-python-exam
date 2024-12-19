@@ -34,3 +34,9 @@ class MaterialsListView(QListView):
         self.setItemDelegateForRow
         self.setSelectionBehavior(self.SelectRows)
         self.setItemDelegate(MaterialsItemDelegate(self))
+        self.setStyleSheet("""
+            QListView::item {
+                margin: 4px
+                border: 4px solid black;
+            }
+        """)

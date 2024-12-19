@@ -21,8 +21,21 @@ class MaterialsModel(QSqlQueryModel):
 
     def refresh_data(self):
         sql = '''
-            select *
-            from materials;
+            select
+                m.image,
+                mt.name as material_type,
+                m.name,
+                m.inventory,
+                m.min_amount,
+                (
+                select string_agg(s.name, ', ')
+                from materials_suppliers ms
+                    join suppliers s
+                        on s.id = ms.supplier_id
+                where ms.material_id = m.id) as suppliers
+            from materials m
+                join material_types as mt
+                    on mt.id = m.type_id
         '''
         self.setQuery(sql)
 

@@ -36,5 +36,6 @@ CREATE TABLE materials (
 
 CREATE TABLE materials_suppliers (
 	material_id bigint NOT NULL REFERENCES materials(id),
-	supplier_id bigint NOT NULL REFERENCES suppliers(id)
+	supplier_id bigint NOT NULL REFERENCES suppliers(id),
+	UNIQUE (material_id, supplier_id)
 );

@@ -4,11 +4,20 @@ version = "0.1.0"
 description = ""
 authors = ["Andrei Belskii <mrandrewer@yandex.ru>"]
 readme = "README.md"
+packages = [
+    {include = "app", from="src"},
+    {include = "wsuniversal", from="ws"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pyqt5 = "^5.15.11"
+pytest = "^8.3.4"
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "ws", "app"
+]
 
 [build-system]
 requires = ["poetry-core"]

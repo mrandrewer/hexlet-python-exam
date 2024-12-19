@@ -4,5 +4,8 @@ install:
 run:
 	poetry run python src/__main__.py
 
+test:
+	poetry run pytest
+
 lint:
 	poetry run flake8 .

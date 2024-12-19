@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QComboBox
 )
 
-from Materials import MaterialsView
+from Materials import MaterialsListView, MaterialsView
 
 
 class MainWindow(QMainWindow):
@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         filter_box = QComboBox(parent=widget)
         header_layout.addWidget(filter_box)
         main_layout.addLayout(header_layout)
-        materials_view = MaterialsView(widget)
+        materials_view = MaterialsListView(widget)
         main_layout.addWidget(materials_view)
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)

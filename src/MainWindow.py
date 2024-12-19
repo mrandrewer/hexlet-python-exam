@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import (
 )
 
 from Materials import MaterialsListView, MaterialsView
+from controls.MaterialsWidget import MaterialsWidget
+from model.Material import Material
 
 
 class MainWindow(QMainWindow):
@@ -26,6 +28,17 @@ class MainWindow(QMainWindow):
         filter_box = QComboBox(parent=widget)
         header_layout.addWidget(filter_box)
         main_layout.addLayout(header_layout)
+
+        material = Material()
+        material.type = "Нитки"
+        material.name = "Нитки какие-то 2х2"
+        material.min_amount = 20
+        material.inventory = 100
+        material.suppliers = "Рога и копыта"
+
+        materialWidget = MaterialsWidget(material, self)
+        main_layout.addWidget(materialWidget)
+
         materials_view = MaterialsListView(widget)
         main_layout.addWidget(materials_view)
         widget.setLayout(main_layout)

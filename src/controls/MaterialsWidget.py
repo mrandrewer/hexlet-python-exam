@@ -2,16 +2,13 @@ import os
 from PyQt5.QtWidgets import (
     QWidget,
     QLabel,
-    QTextEdit,
-    QPushButton,
     QVBoxLayout,
     QHBoxLayout,
-    QListView
 )
 from PyQt5.QtGui import (
     QPixmap
 )
-from PyQt5.QtSql import QSqlRecord
+from PyQt5.QtCore import Qt
 
 from model.Material import Material
 
@@ -28,12 +25,14 @@ class MaterialsWidget(QWidget):
             )
         ) + "/resources/" + material.image
 
+        material_box = QWidget(self)
+        material_box.setObjectName("material_box")
         hbox = QHBoxLayout()
         image_view = QLabel()
         image_view.setObjectName("image")
         print(image_path)
         image_view.setPixmap(
-            QPixmap(image_path)
+            QPixmap(image_path).scaled(80, 80, Qt.KeepAspectRatio)
         )
         hbox.addWidget(image_view)
 
@@ -53,14 +52,35 @@ class MaterialsWidget(QWidget):
         right_box.addWidget(min_amount_label)
 
         suppliers_box = QHBoxLayout()
-        suppliers_title_label = QLabel("Поставщики: ")
+        suppliers_title_label = QLabel("Поставщики:")
         suppliers_title_label.setObjectName("suppiers_title")
         suppliers_box.addWidget(suppliers_title_label)
         suppliers_label = QLabel(material.suppliers)
         suppliers_label.setObjectName("suppliers")
+        suppliers_label.setWordWrap(True)
         suppliers_box.addWidget(suppliers_label)
         suppliers_box.addStretch()
         right_box.addLayout(suppliers_box)
 
         hbox.addLayout(right_box)
-        self.setLayout(hbox)
+        material_box.setLayout(hbox)
+
+        outer_box = QHBoxLayout()
+        outer_box.addWidget(material_box)
+        self.setLayout(outer_box)
+
+        self.setStyleSheet("""
+            #material_box{
+                border: 1px solid black;
+            }
+            QLabel {
+                font: Verdana;
+            }
+            QLabel#title{
+                font-size: 14pt;
+                text-align: left;
+            }
+            QLabel#suppiers_title{
+                font-weight:600;
+            }
+        """)

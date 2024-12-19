@@ -6,8 +6,7 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QComboBox
 )
-
-from Materials import MaterialsListView, MaterialsView
+from Materials import MaterialsListView
 from controls.MaterialsWidget import MaterialsWidget
 from model.Material import Material
 

@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         header_layout.addWidget(search_box)
         sort_box = QComboBox(parent=widget)
         header_layout.addWidget(sort_box)
-        filter_box = QComboBox(parent=widget)
+        filter_box = self.create_type_filter(widget)
         header_layout.addWidget(filter_box)
         main_layout.addLayout(header_layout)
         materials_view = MaterialsListView(self.model, widget)
@@ -52,3 +52,11 @@ class MainWindow(QMainWindow):
         centerPoint = QApplication.desktop().screenGeometry(screen).center()
         frameGm.moveCenter(centerPoint)
         self.move(frameGm.topLeft())
+
+    def create_type_filter(self, parent):
+        filter_box = QComboBox(parent)
+        types = self.model.get_types()
+        filter_box.addItem("Все типы", None)
+        for id, name in types.items():
+            filter_box.addItem(name, id)
+        return filter_box

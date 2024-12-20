@@ -127,6 +127,9 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_add_pressed(self):
         types = self.model.get_types()
-        units = self.model.get_types()
+        units = self.model.get_units()
         dlg = MaterialsDialog("Создание материала", types, units, False, self)
-        dlg.show()
+        exec_result = dlg.exec()
+        print(exec_result)
+        if exec_result:
+            self.model.add(dlg.get_material())

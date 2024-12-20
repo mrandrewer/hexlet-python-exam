@@ -45,7 +45,7 @@ class MaterialsDialog(QDialog):
         unit_lbl = QLabel("&Единица измерения", parent=self)
         self.__unit_edit = QComboBox(parent=self)
         unit_lbl.setBuddy(self.__unit_edit)
-        self.__unit_edit.addItem("", None)
+        self.__unit_edit.addItem("", -1)
         for id, name in unit_types.items():
             self.__unit_edit.addItem(name, id)
 
@@ -114,6 +114,7 @@ class MaterialsDialog(QDialog):
         self.__min_amount_edit.setValue(model.min_amount)
         self.__price_edit.setValue(model.price)
         self.__package_amount_edit.setValue(model.package_amount)
+        self.__unit_edit.setCurrentIndex(model.unit_id)
         return model
 
     def get_material(self):
@@ -124,4 +125,5 @@ class MaterialsDialog(QDialog):
         model.min_amount = self.__min_amount_edit.value()
         model.price = self.__price_edit.value()
         model.package_amount = self.__package_amount_edit.value()
+        model.unit_id = self.__unit_edit.currentData()
         return model

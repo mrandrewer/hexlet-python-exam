@@ -31,7 +31,8 @@ class MaterialsModel(QSqlQueryModel):
                 price,
                 m.image,
                 m.type_id,
-                m.package_amount
+                m.package_amount,
+                m.unit_id
             from materials m
                 join material_types as mt
                     on mt.id = m.type_id
@@ -50,6 +51,7 @@ class MaterialsModel(QSqlQueryModel):
         material.image = self.data(self.index(rowId, 7))
         material.type_id = self.data(self.index(rowId, 8))
         material.package_amount = self.data(self.index(rowId, 9))
+        material.unit_id = self.data(self.index(rowId, 10))
         return material
 
     def get_types(self):
@@ -83,3 +85,20 @@ class MaterialsModel(QSqlQueryModel):
                 units[sel_query.value('id')] = sel_query.value('name')
                 sel_query.next()
         return units
+
+    def add(self, material: Material):
+        add_query = QSqlQuery()
+        sql = '''
+            INSERT INTO materials (name, type_id, price, inventory, min_amount, package_amount, unit_id ) VALUES
+            ( :name, :type_id, :price, :inventory, :min_amount, :package_amount, :unit_id);
+        '''
+        add_query.prepare(sql)
+        add_query.bindValue(':name', material.name[:50])
+        add_query.bindValue(':type_id', material.type_id)
+        add_query.bindValue(':price', material.price)
+        add_query.bindValue(':inventory', material.inventory)
+        add_query.bindValue(':min_amount', material.min_amount)
+        add_query.bindValue(':package_amount', material.package_amount)
+        add_query.bindValue(':unit_id', None if material.unit_id < 0 else material.unit_id)
+        add_query.exec_()
+        self.refresh_data()

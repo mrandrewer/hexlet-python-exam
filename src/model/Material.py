@@ -12,3 +12,4 @@ class Material:
     image: str
     price: decimal
     package_amount: int
+    unit_id: int

@@ -91,7 +91,6 @@ class MaterialsWidget(QWidget):
                 )
             ) + "/resources" + image_name
         )
-        print(image_path)
         self.title_label.setText(title)
         self.inventory_label.setText(inventory)
         self.min_amount_label.setText(min_amount)

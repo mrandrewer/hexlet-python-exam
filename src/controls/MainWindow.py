@@ -6,7 +6,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QLineEdit,
     QComboBox,
-    QPushButton
+    QPushButton,
+    QLabel
 )
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import QApplication
@@ -24,6 +25,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Список материалов')
         self.create_model()
         self.setCentralWidget(self.creaete_main_widget())
+        self.update_count_text()
         self.setMinimumSize(700, 500)
         icon_path = os.path.normpath(
             os.path.dirname(
@@ -57,6 +59,10 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(header_layout)
         materials_view = MaterialsListView(self.filter_model, widget)
         main_layout.addWidget(materials_view)
+        paging_layout = QHBoxLayout()
+        self.count_text = QLabel(self)
+        paging_layout.addWidget(self.count_text)
+        main_layout.addLayout(paging_layout)
         buttons_layout = QHBoxLayout()
         add_btn = QPushButton("Добавить", widget)
         add_btn.setObjectName("add_btn")
@@ -123,6 +129,7 @@ class MainWindow(QMainWindow):
             self.filter_model.sort(-1, Qt.SortOrder.AscendingOrder)
         else:
             self.filter_model.sort(sort_type[0], sort_type[1])
+        self.update_count_text()
 
     def on_sort_filter_changed(self, value):
         self.apply_filter()
@@ -142,3 +149,8 @@ class MainWindow(QMainWindow):
         print(exec_result)
         if exec_result:
             self.model.add(dlg.get_material())
+
+    def update_count_text(self):
+        filtered = self.filter_model.rowCount()
+        total = self.model.rowCount()
+        self.count_text.setText(f"{filtered} из {total}")

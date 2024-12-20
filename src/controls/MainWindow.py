@@ -21,21 +21,7 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.setWindowTitle('Список материалов')
         self.create_model()
-        widget = QWidget(self)
-        main_layout = QVBoxLayout()
-        header_layout = QHBoxLayout()
-        self.search_box = QLineEdit(parent=widget)
-        self.search_box.textChanged.connect(self.on_search_filter_changed)
-        header_layout.addWidget(self.search_box)
-        self.sort_box = self.create_sort_filter(parent)
-        header_layout.addWidget(self.sort_box)
-        self.filter_box = self.create_type_filter(widget)
-        header_layout.addWidget(self.filter_box)
-        main_layout.addLayout(header_layout)
-        materials_view = MaterialsListView(self.filter_model, widget)
-        main_layout.addWidget(materials_view)
-        widget.setLayout(main_layout)
-        self.setCentralWidget(widget)
+        self.setCentralWidget(self.creaete_main_widget())
         self.setMinimumSize(700, 500)
         icon_path = os.path.normpath(
             os.path.dirname(
@@ -46,6 +32,23 @@ class MainWindow(QMainWindow):
         )
         self.setWindowIcon(QIcon(icon_path))
         self.center()
+
+    def creaete_main_widget(self):
+        widget = QWidget(self)
+        main_layout = QVBoxLayout()
+        header_layout = QHBoxLayout()
+        self.search_box = QLineEdit(widget)
+        self.search_box.textChanged.connect(self.on_search_filter_changed)
+        header_layout.addWidget(self.search_box)
+        self.sort_box = self.create_sort_filter(widget)
+        header_layout.addWidget(self.sort_box)
+        self.filter_box = self.create_type_filter(widget)
+        header_layout.addWidget(self.filter_box)
+        main_layout.addLayout(header_layout)
+        materials_view = MaterialsListView(self.filter_model, widget)
+        main_layout.addWidget(materials_view)
+        widget.setLayout(main_layout)
+        return widget
 
     def center(self):
         frameGm = self.frameGeometry()

@@ -137,6 +137,7 @@ class MainWindow(QMainWindow):
             self.filter_model.sort(-1, Qt.SortOrder.AscendingOrder)
         else:
             self.filter_model.sort(sort_type[0], sort_type[1])
+        self.paged_model.invalidateFilter()
         self.update_pager()
         self.update_count_text()
 

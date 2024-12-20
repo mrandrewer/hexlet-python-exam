@@ -157,7 +157,7 @@ class MainWindow(QMainWindow):
         self.apply_filter()
 
     def on_page_changed(self, page):
-        self.apply_page(page)
+        self.apply_page(page - 1)
 
     @pyqtSlot()
     def on_add_pressed(self):

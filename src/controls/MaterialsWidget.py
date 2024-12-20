@@ -121,4 +121,3 @@ class MaterialsWidget(QWidget):
         else:
             self.material_box.setObjectName("material_box")
         self.setStyleSheet(self.styleSheet())
-        

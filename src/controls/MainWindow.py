@@ -83,6 +83,7 @@ class MainWindow(QMainWindow):
 
     def apply_filter(self):
         search_filter = self.search_box.text()
+        self.filter_model.set_filter(search_filter)
         type_filter = self.filter_box.currentData()
         self.filter_model.set_material_type(type_filter)
         sort_type = self.sort_box.currentData()

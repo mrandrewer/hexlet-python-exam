@@ -68,7 +68,9 @@ class MaterialsDialog(QDialog):
         price_lbl.setBuddy(self.__price_edit)
 
         ok_btn = QPushButton("ОК", parent=self)
+        ok_btn.setObjectName("ok_btn")
         cancel_btn = QPushButton("Отмена", parent=self)
+        cancel_btn.setObjectName("cancel_btn")
 
         layout = QVBoxLayout()
         layout.addWidget(name_lbl)
@@ -89,6 +91,7 @@ class MaterialsDialog(QDialog):
         btn_layout = QHBoxLayout()
         if show_delete:
             del_btn = QPushButton("Удалить", parent=self)
+            del_btn.setObjectName("del_btn")
             del_btn.clicked.connect(self.delete)
             btn_layout.addWidget(del_btn)
         btn_layout.addStretch()
@@ -100,6 +103,15 @@ class MaterialsDialog(QDialog):
 
         ok_btn.clicked.connect(self.finish)
         cancel_btn.clicked.connect(self.reject)
+
+        self.setStyleSheet("""
+            QDialog {
+                background-color:white;
+            }
+            QPushButton#ok_btn, QPushButton#del_btn {
+                background-color: #D32B39;
+            }
+        """)
 
     @pyqtSlot()
     def finish(self):

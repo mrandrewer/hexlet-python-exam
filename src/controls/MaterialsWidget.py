@@ -57,6 +57,9 @@ class MaterialsWidget(QWidget):
         self.setLayout(outer_box)
 
         self.setStyleSheet("""
+            QWidget{
+                background-color:white;
+            }
             #material_box{
                 border: 1px solid black;
             }

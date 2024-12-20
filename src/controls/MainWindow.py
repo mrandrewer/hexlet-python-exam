@@ -33,6 +33,14 @@ class MainWindow(QMainWindow):
             ) + "/resources/Большая пачка.png"
         )
         self.setWindowIcon(QIcon(icon_path))
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color:white;
+            }
+            QPushButton#add_btn {
+                background-color: #D32B39;
+            }
+        """)
         self.center()
 
     def creaete_main_widget(self):
@@ -51,6 +59,7 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(materials_view)
         buttons_layout = QHBoxLayout()
         add_btn = QPushButton("Добавить", widget)
+        add_btn.setObjectName("add_btn")
         add_btn.pressed.connect(self.on_add_pressed)
         buttons_layout.addWidget(add_btn)
         buttons_layout.addStretch()

@@ -7,10 +7,11 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QComboBox
 )
-from PyQt5.QtCore import QSortFilterProxyModel, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
 from controls.MaterialsListView import MaterialsListView
+from model.MaterialsFilteredModel import MaterialsFilteredModel
 from model.MaterialsModel import MaterialsModel
 
 
@@ -56,13 +57,13 @@ class MainWindow(QMainWindow):
 
     def create_model(self):
         self.model = MaterialsModel(self)
-        self.filter_model = QSortFilterProxyModel(self)
+        self.filter_model = MaterialsFilteredModel(self)
         self.filter_model.setSourceModel(self.model)
 
     def create_type_filter(self, parent):
         filter_box = QComboBox(parent)
         types = self.model.get_types()
-        filter_box.addItem("Все типы", None)
+        filter_box.addItem("Все типы", -1)
         for id, name in types.items():
             filter_box.addItem(name, id)
         filter_box.currentIndexChanged.connect(self.on_type_filter_changed)
@@ -83,6 +84,7 @@ class MainWindow(QMainWindow):
     def apply_filter(self):
         search_filter = self.search_box.text()
         type_filter = self.filter_box.currentData()
+        self.filter_model.set_material_type(type_filter)
         sort_type = self.sort_box.currentData()
         if sort_type is None:
             self.filter_model.sort(-1, Qt.SortOrder.AscendingOrder)

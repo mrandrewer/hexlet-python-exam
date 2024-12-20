@@ -29,7 +29,8 @@ class MaterialsModel(QSqlQueryModel):
                         on s.id = ms.supplier_id
                 where ms.material_id = m.id) as suppliers,
                 price,
-                m.image
+                m.image,
+                m.type_id
             from materials m
                 join material_types as mt
                     on mt.id = m.type_id
@@ -45,6 +46,7 @@ class MaterialsModel(QSqlQueryModel):
         material.min_amount = self.data(self.index(rowId, 4))
         material.suppliers = self.data(self.index(rowId, 5))
         material.image = self.data(self.index(rowId, 7))
+        material.type_id = self.data(self.index(rowId, 8))
         return material
 
     def get_types(self):

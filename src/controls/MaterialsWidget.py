@@ -16,8 +16,8 @@ from model.Material import Material
 class MaterialsWidget(QWidget):
     def __init__(self, parent=None):
         super(MaterialsWidget, self).__init__(parent)
-        material_box = QWidget(self)
-        material_box.setObjectName("material_box")
+        self.material_box = QWidget(self)
+        self.material_box.setObjectName("material_box")
         hbox = QHBoxLayout()
         image_view = QLabel()
         image_view.setObjectName("image")
@@ -49,18 +49,31 @@ class MaterialsWidget(QWidget):
         right_box.addLayout(suppliers_box)
 
         hbox.addLayout(right_box)
-        material_box.setLayout(hbox)
+        self.material_box.setLayout(hbox)
 
         outer_box = QHBoxLayout()
-        outer_box.addWidget(material_box)
+        outer_box.addWidget(self.material_box)
         self.setLayout(outer_box)
 
         self.setStyleSheet("""
-            QWidget{
+            MaterialsWidget {
+                background-color:white;
+                padding: 0;
+            }
+            #material_box {
+                margin: 0;
+                border: 1px solid black;
                 background-color:white;
             }
-            #material_box{
+            #material_box_min {
+                margin: 0;
                 border: 1px solid black;
+                background-color: #f19292;
+            }
+            #material_box_max {
+                margin: 0;
+                border: 1px solid black;
+                background-color: #ffba01;
             }
             QLabel {
                 font: Verdana;
@@ -101,3 +114,11 @@ class MaterialsWidget(QWidget):
         self.image_view.setPixmap(
             QPixmap(image_path).scaled(80, 80, Qt.KeepAspectRatio)
         )
+        if material.inventory < material.min_amount:
+            self.material_box.setObjectName("material_box_min")
+        elif material.inventory > material.min_amount * 3:
+            self.material_box.setObjectName("material_box_max")
+        else:
+            self.material_box.setObjectName("material_box")
+        self.setStyleSheet(self.styleSheet())
+        

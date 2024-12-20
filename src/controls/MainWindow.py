@@ -17,6 +17,7 @@ from controls.MaterialsDialog import MaterialsDialog
 from controls.MaterialsListView import MaterialsListView
 from model.MaterialsFilteredModel import MaterialsFilteredModel
 from model.MaterialsModel import MaterialsModel
+from model.MaterialsPagedModel import MaterialsPagedModel
 
 
 class MainWindow(QMainWindow):
@@ -58,7 +59,7 @@ class MainWindow(QMainWindow):
         self.filter_box = self.create_type_filter(widget)
         header_layout.addWidget(self.filter_box)
         main_layout.addLayout(header_layout)
-        materials_view = MaterialsListView(self.filter_model, widget)
+        materials_view = MaterialsListView(self.paged_model, widget)
         main_layout.addWidget(materials_view)
         paging_layout = QHBoxLayout()
         self.count_text = QLabel(self)
@@ -88,6 +89,8 @@ class MainWindow(QMainWindow):
         self.model = MaterialsModel(self)
         self.filter_model = MaterialsFilteredModel(self)
         self.filter_model.setSourceModel(self.model)
+        self.paged_model = MaterialsPagedModel(15, self)
+        self.paged_model.setSourceModel(self.filter_model)
 
     def create_type_filter(self, parent):
         filter_box = QComboBox(parent)

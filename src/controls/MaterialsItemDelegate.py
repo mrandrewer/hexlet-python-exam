@@ -31,8 +31,8 @@ class MaterialsItemDelegate(QStyledItemDelegate):
             painter: QPainter | None,
             option: QStyleOptionViewItem,
             index: QModelIndex) -> None:
-        material: Material = index.model() \
-            .sourceModel() \
+        source_model: MaterialsModel = index.model().sourceModel().sourceModel()
+        material: Material = source_model \
             .get_row_fields(index.model().mapToSource(index).row())
         self.widget.setMaterial(material)
         self.widget.resize(option.rect.size())
@@ -42,9 +42,9 @@ class MaterialsItemDelegate(QStyledItemDelegate):
 
     def editorEvent(self, event, model, option, index):
         if event.type() == QEvent.MouseButtonRelease:
-            material: Material = model.sourceModel() \
+            source_model: MaterialsModel = model.sourceModel().sourceModel()
+            material: Material = source_model \
                 .get_row_fields(model.mapToSource(index).row())
-            source_model: MaterialsModel = model.sourceModel()
             types = source_model.get_types()
             units = source_model.get_units()
             dlg = MaterialsDialog("Редактирование материала", types, units, True, self.parent())

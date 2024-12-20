@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QComboBox
 )
-from PyQt5.QtCore import QSortFilterProxyModel 
+from PyQt5.QtCore import QSortFilterProxyModel, Qt
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
 from controls.MaterialsListView import MaterialsListView
@@ -71,12 +71,12 @@ class MainWindow(QMainWindow):
     def create_sort_filter(self, parent):
         sort_box = QComboBox(parent)
         sort_box.addItem("Без сортировки", None)
-        sort_box.addItem("Наименование (возр.)", 1)
-        sort_box.addItem("Наименование (убыв.)", 2)
-        sort_box.addItem("Остаток (возр.)", 3)
-        sort_box.addItem("Остаток (убыв.)", 4)
-        sort_box.addItem("Стоимость (возр.)", 5)
-        sort_box.addItem("Стоимость (убыв.)", 6)
+        sort_box.addItem("Наименование (возр.)", (2, Qt.SortOrder.AscendingOrder))
+        sort_box.addItem("Наименование (убыв.)", (2, Qt.SortOrder.DescendingOrder))
+        sort_box.addItem("Остаток (возр.)", (3, Qt.SortOrder.AscendingOrder))
+        sort_box.addItem("Остаток (убыв.)", (3, Qt.SortOrder.DescendingOrder))
+        sort_box.addItem("Стоимость (возр.)", (6, Qt.SortOrder.AscendingOrder))
+        sort_box.addItem("Стоимость (убыв.)", (6, Qt.SortOrder.DescendingOrder))
         sort_box.currentIndexChanged.connect(self.on_sort_filter_changed)
         return sort_box
 
@@ -84,7 +84,10 @@ class MainWindow(QMainWindow):
         search_filter = self.search_box.text()
         type_filter = self.filter_box.currentData()
         sort_type = self.sort_box.currentData()
-        self.filter_model.sort
+        if sort_type is None:
+            self.filter_model.sort(-1, Qt.SortOrder.AscendingOrder)
+        else:
+            self.filter_model.sort(sort_type[0], sort_type[1])
 
     def on_sort_filter_changed(self, value):
         self.apply_filter()

@@ -12,7 +12,7 @@ class MaterialsModel(QSqlQueryModel):
         self.setHeaderData(3, Qt.Horizontal, "Остаток")
         self.setHeaderData(4, Qt.Horizontal, "Минимальное количество")
         self.setHeaderData(5, Qt.Horizontal, "Поставщики")
-        self.setHeaderData(5, Qt.Horizontal, "Стоимость")
+        self.setHeaderData(6, Qt.Horizontal, "Стоимость")
 
     def refresh_data(self):
         sql = '''

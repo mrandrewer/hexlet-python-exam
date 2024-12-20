@@ -41,12 +41,11 @@ class MaterialsWidget(QWidget):
         suppliers_box = QHBoxLayout()
         suppliers_title_label = QLabel("Поставщики:")
         suppliers_title_label.setObjectName("suppiers_title")
-        suppliers_box.addWidget(suppliers_title_label)
+        suppliers_box.addWidget(suppliers_title_label, 0)
         suppliers_label = QLabel()
         suppliers_label.setObjectName("suppliers")
         suppliers_label.setWordWrap(True)
-        suppliers_box.addWidget(suppliers_label)
-        suppliers_box.addStretch()
+        suppliers_box.addWidget(suppliers_label, 1)
         right_box.addLayout(suppliers_box)
 
         hbox.addLayout(right_box)
@@ -72,6 +71,7 @@ class MaterialsWidget(QWidget):
             }
             QLabel#suppiers_title{
                 font-weight:600;
+                text-align: left;
             }
         """)
         self.image_view = image_view

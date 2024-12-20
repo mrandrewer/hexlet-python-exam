@@ -85,16 +85,22 @@ class MainWindow(QMainWindow):
         sort_box.addItem("Без сортировки", None)
         sort_box.addItem(
             "Наименование (возр.)",
-            (2, Qt.SortOrder.AscendingOrder)
-        )
+            (2, Qt.SortOrder.AscendingOrder))
         sort_box.addItem(
             "Наименование (убыв.)",
-            (2, Qt.SortOrder.DescendingOrder)
-        )
-        sort_box.addItem("Остаток (возр.)", (3, Qt.SortOrder.AscendingOrder))
-        sort_box.addItem("Остаток (убыв.)", (3, Qt.SortOrder.DescendingOrder))
-        sort_box.addItem("Стоимость (возр.)", (6, Qt.SortOrder.AscendingOrder))
-        sort_box.addItem("Стоимость (убыв.)", (6, Qt.SortOrder.DescendingOrder))
+            (2, Qt.SortOrder.DescendingOrder))
+        sort_box.addItem(
+            "Остаток (возр.)",
+            (3, Qt.SortOrder.AscendingOrder))
+        sort_box.addItem(
+            "Остаток (убыв.)",
+            (3, Qt.SortOrder.DescendingOrder))
+        sort_box.addItem(
+            "Стоимость (возр.)",
+            (6, Qt.SortOrder.AscendingOrder))
+        sort_box.addItem(
+            "Стоимость (убыв.)",
+            (6, Qt.SortOrder.DescendingOrder))
         sort_box.currentIndexChanged.connect(self.on_sort_filter_changed)
         return sort_box
 

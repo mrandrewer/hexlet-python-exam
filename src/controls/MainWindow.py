@@ -72,8 +72,14 @@ class MainWindow(QMainWindow):
     def create_sort_filter(self, parent):
         sort_box = QComboBox(parent)
         sort_box.addItem("Без сортировки", None)
-        sort_box.addItem("Наименование (возр.)", (2, Qt.SortOrder.AscendingOrder))
-        sort_box.addItem("Наименование (убыв.)", (2, Qt.SortOrder.DescendingOrder))
+        sort_box.addItem(
+            "Наименование (возр.)",
+            (2, Qt.SortOrder.AscendingOrder)
+        )
+        sort_box.addItem(
+            "Наименование (убыв.)",
+            (2, Qt.SortOrder.DescendingOrder)
+        )
         sort_box.addItem("Остаток (возр.)", (3, Qt.SortOrder.AscendingOrder))
         sort_box.addItem("Остаток (убыв.)", (3, Qt.SortOrder.DescendingOrder))
         sort_box.addItem("Стоимость (возр.)", (6, Qt.SortOrder.AscendingOrder))

@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtWidgets import (
     QMainWindow,
     QWidget,
@@ -8,6 +9,7 @@ from PyQt5.QtWidgets import (
 )
 from Materials import MaterialsListView
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import QIcon
 
 
 class MainWindow(QMainWindow):
@@ -31,6 +33,14 @@ class MainWindow(QMainWindow):
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
         self.setMinimumSize(700, 500)
+        icon_path = os.path.normpath(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.abspath(__file__)
+                )
+            ) + "/resources/Большая пачка.png"
+        )
+        self.setWindowIcon(QIcon(icon_path))
         self.center()
 
     def center(self):

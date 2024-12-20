@@ -1,6 +1,6 @@
 import sys
 from Application import Application
-from MainWindow import MainWindow
+from controls.MainWindow import MainWindow
 
 app = Application(sys.argv)
 main_window = MainWindow()

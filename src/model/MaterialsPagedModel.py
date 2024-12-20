@@ -13,7 +13,7 @@ class MaterialsPagedModel(QSortFilterProxyModel):
         self.invalidateFilter()
 
     def get_page_count(self):
-        return ceil(float(self.rowCount()) / self.page_size)
+        return ceil(float(self.sourceModel().rowCount()) / self.page_size)
 
     def filterAcceptsRow(self, source_row, source_parent):
         page_start = self.page_size * self.page_num

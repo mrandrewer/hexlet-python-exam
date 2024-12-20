@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.create_model()
         self.setCentralWidget(self.creaete_main_widget())
         self.update_count_text()
+        self.update_pager()
         self.setMinimumSize(700, 500)
         icon_path = os.path.normpath(
             os.path.dirname(
@@ -64,7 +65,8 @@ class MainWindow(QMainWindow):
         paging_layout = QHBoxLayout()
         self.count_text = QLabel(self)
         paging_layout.addWidget(self.count_text)
-        self.pager = Pages(10, self)
+        self.pager = Pages(1, self)
+        self.pager.pageChanged.connect(self.on_page_changed)
         paging_layout.addWidget(self.pager)
         main_layout.addLayout(paging_layout)
         buttons_layout = QHBoxLayout()
@@ -135,7 +137,15 @@ class MainWindow(QMainWindow):
             self.filter_model.sort(-1, Qt.SortOrder.AscendingOrder)
         else:
             self.filter_model.sort(sort_type[0], sort_type[1])
+        self.update_pager()
         self.update_count_text()
+
+    def apply_page(self, page_num):
+        self.paged_model.set_page_num(page_num)
+
+    def update_pager(self):
+        page_count = self.paged_model.get_page_count()
+        self.pager.set_page_count(page_count)
 
     def on_sort_filter_changed(self, value):
         self.apply_filter()
@@ -145,6 +155,9 @@ class MainWindow(QMainWindow):
 
     def on_search_filter_changed(self, value):
         self.apply_filter()
+
+    def on_page_changed(self, page):
+        self.apply_page(page)
 
     @pyqtSlot()
     def on_add_pressed(self):

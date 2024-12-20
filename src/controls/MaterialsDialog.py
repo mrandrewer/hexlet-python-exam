@@ -14,7 +14,7 @@ from PyQt5.QtCore import pyqtSlot
 from model.Material import Material
 
 
-class TestDialog(QDialog):
+class MaterialsDialog(QDialog):
 
     def __init__(
             self,
@@ -39,6 +39,7 @@ class TestDialog(QDialog):
 
         inventory_lbl = QLabel("&Остаток", parent=self)
         self.__inventory_edit = QSpinBox(parent=self)
+        self.__inventory_edit.setMaximum(100000)
         inventory_lbl.setBuddy(self.__inventory_edit)
 
         unit_lbl = QLabel("&Единица измерения", parent=self)
@@ -50,20 +51,22 @@ class TestDialog(QDialog):
 
         package_amount_lbl = QLabel("&Количество в упаковке", parent=self)
         self.__package_amount_edit = QSpinBox(parent=self)
+        self.__package_amount_edit.setMaximum(100000)
         package_amount_lbl.setBuddy(self.__package_amount_edit)
 
         min_amount_lbl = QLabel("&Минимальный остаток", parent=self)
         self.__min_amount_edit = QSpinBox(parent=self)
         self.__min_amount_edit.setMinimum(0)
+        self.__min_amount_edit.setMaximum(100000)
         min_amount_lbl.setBuddy(self.__min_amount_edit)
 
         price_lbl = QLabel("&Стоимость", parent=self)
         self.__price_edit = QDoubleSpinBox(parent=self)
         self.__price_edit.setMinimum(0)
+        self.__price_edit.setMaximum(1000000)
         self.__price_edit.setDecimals(2)
         price_lbl.setBuddy(self.__price_edit)
 
-        del_btn = QPushButton("Удалить", parent=self)
         ok_btn = QPushButton("ОК", parent=self)
         cancel_btn = QPushButton("Отмена", parent=self)
 
@@ -85,6 +88,7 @@ class TestDialog(QDialog):
 
         btn_layout = QHBoxLayout()
         if show_delete:
+            del_btn = QPushButton("Удалить", parent=self)
             btn_layout.addWidget(del_btn)
         btn_layout.addStretch()
         btn_layout.addWidget(ok_btn)

@@ -5,11 +5,13 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QVBoxLayout,
     QLineEdit,
-    QComboBox
+    QComboBox,
+    QPushButton
 )
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
+from controls.MaterialsDialog import MaterialsDialog
 from controls.MaterialsListView import MaterialsListView
 from model.MaterialsFilteredModel import MaterialsFilteredModel
 from model.MaterialsModel import MaterialsModel
@@ -47,6 +49,12 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(header_layout)
         materials_view = MaterialsListView(self.filter_model, widget)
         main_layout.addWidget(materials_view)
+        buttons_layout = QHBoxLayout()
+        add_btn = QPushButton("Добавить", widget)
+        add_btn.pressed.connect(self.on_add_pressed)
+        buttons_layout.addWidget(add_btn)
+        buttons_layout.addStretch()
+        main_layout.addLayout(buttons_layout)
         widget.setLayout(main_layout)
         return widget
 
@@ -109,3 +117,10 @@ class MainWindow(QMainWindow):
 
     def on_search_filter_changed(self, value):
         self.apply_filter()
+
+    @pyqtSlot()
+    def on_add_pressed(self):
+        types = self.model.get_types()
+        units = self.model.get_types()
+        dlg = MaterialsDialog("Создание материала", types, units, False, self)
+        dlg.show()

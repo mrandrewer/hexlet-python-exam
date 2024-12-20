@@ -89,6 +89,7 @@ class MaterialsDialog(QDialog):
         btn_layout = QHBoxLayout()
         if show_delete:
             del_btn = QPushButton("Удалить", parent=self)
+            del_btn.clicked.connect(self.delete)
             btn_layout.addWidget(del_btn)
         btn_layout.addStretch()
         btn_layout.addWidget(ok_btn)
@@ -106,6 +107,10 @@ class MaterialsDialog(QDialog):
         if model.name == "" or model.type_id == -1:
             return
         self.accept()
+
+    @pyqtSlot()
+    def delete(self):
+        self.done(2)
 
     def set_material(self, model: Material):
         self.__name_edit.setText(model.name)

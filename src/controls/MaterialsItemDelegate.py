@@ -50,9 +50,12 @@ class MaterialsItemDelegate(QStyledItemDelegate):
             dlg = MaterialsDialog("Редактирование материала", types, units, True, self.parent())
             dlg.set_material(material)
             exec_result = dlg.exec()
-            print(exec_result)
             if exec_result == 1:
                 new_material = dlg.get_material()
                 new_material.id = material.id
                 source_model.update(new_material)
+                return True
+            if exec_result == 2:
+                source_model.delete(material)
+                return True
         return False

@@ -128,3 +128,14 @@ class MaterialsModel(QSqlQueryModel):
         add_query.bindValue(':unit_id', None if material.unit_id < 0 else material.unit_id)
         add_query.exec_()
         self.refresh_data()
+
+    def delete(self, material: Material):
+        add_query = QSqlQuery()
+        sql = '''
+            delete from materials
+            where id = :id;
+        '''
+        add_query.prepare(sql)
+        add_query.bindValue(':id', material.id)
+        add_query.exec_()
+        self.refresh_data()

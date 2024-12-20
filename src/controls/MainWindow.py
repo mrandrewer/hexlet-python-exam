@@ -84,6 +84,7 @@ class MainWindow(QMainWindow):
         search_filter = self.search_box.text()
         type_filter = self.filter_box.currentData()
         sort_type = self.sort_box.currentData()
+        self.filter_model.sort
 
     def on_sort_filter_changed(self, value):
         self.apply_filter()

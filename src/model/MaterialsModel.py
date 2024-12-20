@@ -12,6 +12,7 @@ class MaterialsModel(QSqlQueryModel):
         self.setHeaderData(3, Qt.Horizontal, "Остаток")
         self.setHeaderData(4, Qt.Horizontal, "Минимальное количество")
         self.setHeaderData(5, Qt.Horizontal, "Поставщики")
+        self.setHeaderData(5, Qt.Horizontal, "Стоимость")
 
     def refresh_data(self):
         sql = '''
@@ -27,6 +28,7 @@ class MaterialsModel(QSqlQueryModel):
                     join suppliers s
                         on s.id = ms.supplier_id
                 where ms.material_id = m.id) as suppliers,
+                price,
                 m.image
             from materials m
                 join material_types as mt

@@ -1,3 +1,4 @@
+import decimal
 from PyQt5.QtSql import QSqlQueryModel, QSqlQuery
 from PyQt5.QtCore import QObject, Qt
 from model.Material import Material
@@ -93,6 +94,31 @@ class MaterialsModel(QSqlQueryModel):
             ( :name, :type_id, :price, :inventory, :min_amount, :package_amount, :unit_id);
         '''
         add_query.prepare(sql)
+        add_query.bindValue(':name', material.name[:50])
+        add_query.bindValue(':type_id', material.type_id)
+        add_query.bindValue(':price', material.price)
+        add_query.bindValue(':inventory', material.inventory)
+        add_query.bindValue(':min_amount', material.min_amount)
+        add_query.bindValue(':package_amount', material.package_amount)
+        add_query.bindValue(':unit_id', None if material.unit_id < 0 else material.unit_id)
+        add_query.exec_()
+        self.refresh_data()
+
+    def update(self, material: Material):
+        add_query = QSqlQuery()
+        sql = '''
+            update materials set
+                name = :name,
+                type_id = :type_id,
+                price = :price,
+                inventory = :inventory,
+                min_amount = :min_amount,
+                package_amount = :package_amount,
+                unit_id = :unit_id
+            where id = :id;
+        '''
+        add_query.prepare(sql)
+        add_query.bindValue(':id', material.id)
         add_query.bindValue(':name', material.name[:50])
         add_query.bindValue(':type_id', material.type_id)
         add_query.bindValue(':price', material.price)

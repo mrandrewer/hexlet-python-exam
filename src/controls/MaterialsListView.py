@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import (
     QWidget,
     QListView
 )
-
 from controls.MaterialsItemDelegate import MaterialsItemDelegate
 
 

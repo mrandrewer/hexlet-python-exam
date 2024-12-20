@@ -27,7 +27,7 @@ CREATE TABLE materials (
 	name varchar(50) NOT NULL,
 	type_id int NOT NULL REFERENCES material_types(id),
 	image varchar(255),
-	price money,
+	price numeric,
 	inventory int,
 	min_amount int,
 	package_amount int,

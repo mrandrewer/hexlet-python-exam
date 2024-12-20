@@ -79,7 +79,7 @@ class MaterialsWidget(QWidget):
 
     def setMaterial(self, material: Material):
         title = f"{material.type} | {material.name}"
-        inventory = f"Остаток: {material.min_amount} шт"
+        inventory = f"Остаток: {material.inventory} шт"
         min_amount = f"Минимальное количество: {material.min_amount} шт"
         image_name = "/picture.png" \
             if material.image == '' \

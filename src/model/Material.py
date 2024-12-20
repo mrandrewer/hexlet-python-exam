@@ -7,3 +7,4 @@ class Material:
     min_amount: int
     suppliers: str
     image: str
+    price: int

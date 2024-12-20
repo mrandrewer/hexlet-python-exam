@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (
 from controls.MaterialsListView import MaterialsListView
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
+from model.MaterialsModel import MaterialsModel
 
 
 class MainWindow(QMainWindow):
@@ -17,6 +18,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setWindowTitle('Список материалов')
+        self.model = MaterialsModel(self)
 
         widget = QWidget(self)
         main_layout = QVBoxLayout()
@@ -28,7 +30,7 @@ class MainWindow(QMainWindow):
         filter_box = QComboBox(parent=widget)
         header_layout.addWidget(filter_box)
         main_layout.addLayout(header_layout)
-        materials_view = MaterialsListView(widget)
+        materials_view = MaterialsListView(self.model, widget)
         main_layout.addWidget(materials_view)
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)

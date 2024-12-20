@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QComboBox
 )
-from Materials import MaterialsListView
+from controls.MaterialsListView import MaterialsListView
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
 

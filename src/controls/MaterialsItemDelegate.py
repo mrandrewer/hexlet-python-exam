@@ -30,4 +30,6 @@ class MaterialsItemDelegate(QStyledItemDelegate):
         material: Material = index.model().get_row_fields(index.row())
         self.widget.setMaterial(material)
         self.widget.resize(option.rect.size())
-        self.widget.render(painter, option.rect.topLeft())
+        self.widget.render(
+            painter,
+            self.parent().geometry().topLeft() + option.rect.topLeft())

@@ -23,12 +23,13 @@ class MainWindow(QMainWindow):
         widget = QWidget(self)
         main_layout = QVBoxLayout()
         header_layout = QHBoxLayout()
-        search_box = QLineEdit(parent=widget)
-        header_layout.addWidget(search_box)
-        sort_box = self.create_sort_filter(parent)
-        header_layout.addWidget(sort_box)
-        filter_box = self.create_type_filter(widget)
-        header_layout.addWidget(filter_box)
+        self.search_box = QLineEdit(parent=widget)
+        self.search_box.textChanged.connect(self.on_search_filter_changed)
+        header_layout.addWidget(self.search_box)
+        self.sort_box = self.create_sort_filter(parent)
+        header_layout.addWidget(self.sort_box)
+        self.filter_box = self.create_type_filter(widget)
+        header_layout.addWidget(self.filter_box)
         main_layout.addLayout(header_layout)
         materials_view = MaterialsListView(self.filter_model, widget)
         main_layout.addWidget(materials_view)
@@ -64,6 +65,7 @@ class MainWindow(QMainWindow):
         filter_box.addItem("Все типы", None)
         for id, name in types.items():
             filter_box.addItem(name, id)
+        filter_box.currentIndexChanged.connect(self.on_type_filter_changed)
         return filter_box
 
     def create_sort_filter(self, parent):
@@ -75,4 +77,19 @@ class MainWindow(QMainWindow):
         sort_box.addItem("Остаток (убыв.)", 4)
         sort_box.addItem("Стоимость (возр.)", 5)
         sort_box.addItem("Стоимость (убыв.)", 6)
+        sort_box.currentIndexChanged.connect(self.on_sort_filter_changed)
         return sort_box
+
+    def apply_filter(self):
+        search_filter = self.search_box.text()
+        type_filter = self.filter_box.currentData()
+        sort_type = self.sort_box.currentData()
+
+    def on_sort_filter_changed(self, value):
+        self.apply_filter()
+
+    def on_type_filter_changed(self, value):
+        self.apply_filter()
+
+    def on_search_filter_changed(self, value):
+        self.apply_filter()

@@ -1,4 +1,5 @@
 class Material:
+    id: int
     type: str
     name: str
     inventory: int

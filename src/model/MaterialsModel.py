@@ -1,4 +1,4 @@
-from PyQt5.QtSql import QSqlQueryModel
+from PyQt5.QtSql import QSqlQueryModel, QSqlQuery
 from PyQt5.QtCore import QObject, Qt
 from model.Material import Material
 
@@ -36,6 +36,7 @@ class MaterialsModel(QSqlQueryModel):
 
     def get_row_fields(self, rowId):
         material = Material()
+        material.id = self.data(self.index(rowId, 0))
         material.type = self.data(self.index(rowId, 1))
         material.name = self.data(self.index(rowId, 2))
         material.inventory = self.data(self.index(rowId, 3))
@@ -43,3 +44,35 @@ class MaterialsModel(QSqlQueryModel):
         material.suppliers = self.data(self.index(rowId, 5))
         material.image = self.data(self.index(rowId, 6))
         return material
+
+    def get_types(self):
+        sel_query = QSqlQuery()
+        sql = '''
+            select id, name
+            from material_types
+            order by name;
+        '''
+        sel_query.exec_(sql)
+        types = {}
+        if sel_query.isActive():
+            sel_query.first()
+            while sel_query.isValid():
+                types[sel_query.value('id')] = sel_query.value('name')
+                sel_query.next()
+        return types
+
+    def get_units(self):
+        sel_query = QSqlQuery()
+        sql = '''
+            select id, name
+            from units
+            order by name;
+        '''
+        sel_query.exec_(sql)
+        units = {}
+        if sel_query.isActive():
+            sel_query.first()
+            while sel_query.isValid():
+                units[sel_query.value('id')] = sel_query.value('name')
+                sel_query.next()
+        return units

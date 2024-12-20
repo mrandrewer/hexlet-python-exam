@@ -12,7 +12,7 @@ class PageLink(QLabel):
         if active:
             self.setStyleSheet("color: #D32B39;")
         else:
-            self.setStyleSheet("color: #FFC1C1;")
+            self.setStyleSheet("color: black;")
         self.setCursor(Qt.PointingHandCursor)
         self.page_num = page_num
 

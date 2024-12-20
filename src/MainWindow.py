@@ -7,8 +7,6 @@ from PyQt5.QtWidgets import (
     QComboBox
 )
 from Materials import MaterialsListView
-from controls.MaterialsWidget import MaterialsWidget
-from model.Material import Material
 from PyQt5.QtWidgets import QApplication
 
 

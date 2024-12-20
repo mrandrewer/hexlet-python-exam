@@ -1,3 +1,6 @@
+import decimal
+
+
 class Material:
     id: int
     type_id: int
@@ -7,4 +10,5 @@ class Material:
     min_amount: int
     suppliers: str
     image: str
-    price: int
+    price: decimal
+    package_amount: int

@@ -7,9 +7,10 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QComboBox
 )
-from controls.MaterialsListView import MaterialsListView
+from PyQt5.QtCore import QSortFilterProxyModel 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
+from controls.MaterialsListView import MaterialsListView
 from model.MaterialsModel import MaterialsModel
 
 
@@ -18,8 +19,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setWindowTitle('Список материалов')
-        self.model = MaterialsModel(self)
-
+        self.create_model()
         widget = QWidget(self)
         main_layout = QVBoxLayout()
         header_layout = QHBoxLayout()
@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
         filter_box = self.create_type_filter(widget)
         header_layout.addWidget(filter_box)
         main_layout.addLayout(header_layout)
-        materials_view = MaterialsListView(self.model, widget)
+        materials_view = MaterialsListView(self.filter_model, widget)
         main_layout.addWidget(materials_view)
         widget.setLayout(main_layout)
         self.setCentralWidget(widget)
@@ -52,6 +52,11 @@ class MainWindow(QMainWindow):
         centerPoint = QApplication.desktop().screenGeometry(screen).center()
         frameGm.moveCenter(centerPoint)
         self.move(frameGm.topLeft())
+
+    def create_model(self):
+        self.model = MaterialsModel(self)
+        self.filter_model = QSortFilterProxyModel(self)
+        self.filter_model.setSourceModel(self.model)
 
     def create_type_filter(self, parent):
         filter_box = QComboBox(parent)

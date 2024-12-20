@@ -44,7 +44,7 @@ class MaterialsModel(QSqlQueryModel):
         material.inventory = self.data(self.index(rowId, 3))
         material.min_amount = self.data(self.index(rowId, 4))
         material.suppliers = self.data(self.index(rowId, 5))
-        material.image = self.data(self.index(rowId, 6))
+        material.image = self.data(self.index(rowId, 7))
         return material
 
     def get_types(self):

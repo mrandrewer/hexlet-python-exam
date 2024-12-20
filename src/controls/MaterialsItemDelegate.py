@@ -27,7 +27,8 @@ class MaterialsItemDelegate(QStyledItemDelegate):
             painter: QPainter | None,
             option: QStyleOptionViewItem,
             index: QModelIndex) -> None:
-        material: Material = index.model().get_row_fields(index.row())
+        material: Material = index.model() \
+            .sourceModel().get_row_fields(index.row())
         self.widget.setMaterial(material)
         self.widget.resize(option.rect.size())
         self.widget.render(

@@ -1,14 +1,14 @@
-from enum import Enum
+from enum import IntEnum
 import math
 
 
-class WSUniversal(object):
-    class ProductType(Enum):
+class Calculation(object):
+    class ProductType(IntEnum):
         Type1 = 1
         Type2 = 2
         Type3 = 3
 
-    class MaterialType(Enum):
+    class MaterialType(IntEnum):
         Type1 = 1
         Type2 = 2
 
@@ -24,20 +24,24 @@ class WSUniversal(object):
     }
 
     @staticmethod
-    def calculate_materials(
+    def get_quantity_for_product(
+        product_type: int,
+        material_type: int,
         count: int,
         width: int,
         length: int,
-        product_type: ProductType,
-        material_type: MaterialType,
     ):
         if count <= 0 or width <= 0 or length <= 0:
             return -1
+        if product_type not in iter(Calculation.ProductType):
+            return -1
+        if material_type not in iter(Calculation.MaterialType):
+            return -1
         square = width * length
         material_amount = count * square \
-            * WSUniversal.product_type_coef[product_type]
+            * Calculation.product_type_coef[product_type]
         print(material_amount)
         defect_amount = material_amount \
-            * WSUniversal.material_type_coef[material_type]
+            * Calculation.material_type_coef[material_type]
         print(defect_amount)
         return math.ceil(material_amount + defect_amount)

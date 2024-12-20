@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
+from controls.Pages import Pages
 from controls.MaterialsDialog import MaterialsDialog
 from controls.MaterialsListView import MaterialsListView
 from model.MaterialsFilteredModel import MaterialsFilteredModel
@@ -62,6 +63,8 @@ class MainWindow(QMainWindow):
         paging_layout = QHBoxLayout()
         self.count_text = QLabel(self)
         paging_layout.addWidget(self.count_text)
+        self.pager = Pages(10, self)
+        paging_layout.addWidget(self.pager)
         main_layout.addLayout(paging_layout)
         buttons_layout = QHBoxLayout()
         add_btn = QPushButton("Добавить", widget)
